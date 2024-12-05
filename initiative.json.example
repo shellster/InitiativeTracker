@@ -1,0 +1,22 @@
+{
+    "screen_port": "AUTO",
+    "screen_model": "LcdCommRevA",
+    "default_foreground_color": [0, 9, 148],
+    "default_background_color": [0, 0, 0],
+    "on_deck_foreground_color": [0, 9, 148],
+    "on_deck_background_color": [229, 194, 157],
+    "currently_up_foreground_color":  [0, 9, 148],
+    "currently_up_background_color": [255, 255, 255],
+    "enemy_foreground_color":  [138, 0, 0],
+    "enemy_background_color": [150, 150, 150],
+    "player_order": {
+        "Bob": 2,
+        "Darius": 10,
+        "Falcon": 2
+    },
+    "enemy_order": {
+        "Goblin 1": [5, 20],
+        "Goblin 2": [5, 20],
+        "Bee Swarm": [0, 10]
+    }
+}
