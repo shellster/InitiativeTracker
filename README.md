@@ -2,7 +2,7 @@
 
 This project allows TTRPG initative tracking via small screens typically used for displaying PC Hardware settings
 
-![Initiative Tracker in Holder](screenshot/InitiativeTracker.png "Initiative Tracker in Holder")
+![Initiative Tracker in Holder](screenshots/InitiativeTracker.png "Initiative Tracker in Holder")
 
 Before attempting to use this library please carefully read the "Acknowledgements and Important Compatibility Notes" section.
 
