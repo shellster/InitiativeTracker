@@ -2,6 +2,8 @@
 
 This project allows TTRPG initative tracking via small screens typically used for displaying PC Hardware settings
 
+![Initiative Tracker in Holder](screenshot/InitiativeTracker.png "Initiative Tracker in Holder")
+
 Before attempting to use this library please carefully read the "Acknowledgements and Important Compatibility Notes" section.
 
 
@@ -107,3 +109,7 @@ Pull Requests are welcome and appreciated for increasing support.
 If additional screen revisions become available, providing the code does not otherwise change, you should be able to copy the new revision
 from turing-smart-screen-python.library.lcd.<revision> into this projects library.lcd folder.  Then add it to the list of models in
 `get_lcd_instance`
+
+## 3D Printed Case
+
+Checkout the cad folder for 3D printable holders for your screen that will clip to the back of a DM screen.
