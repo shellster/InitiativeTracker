@@ -156,11 +156,11 @@ if __name__ == "__main__":
                     foreground_color = config["on_deck_foreground_color"]
                 
                 if key in config["enemy_order"]:
-                    background_color = config.get("enemy_background_color", background_color)
-                    foreground_color = config.get("enemy_foreground_color", foreground_color)
+                    background_color = config.get("enemy_background_color") or background_color
+                    foreground_color = config.get("enemy_foreground_color") or foreground_color
 
                 staged_commands.append({
-                    "text": f"{key[:lcd_comm.display_config["max_char_width"] - 3].ljust(lcd_comm.display_config["max_char_width"] - 3)} {str(initiative_order[key]).rjust(2)}", 
+                    "text": f"{key[:lcd_comm.display_config['max_char_width'] - 3].ljust(lcd_comm.display_config['max_char_width'] - 3)} {str(initiative_order[key]).rjust(2)}", 
                     "x": lcd_comm.display_config["left_pad"],
                     "y": row * lcd_comm.display_config["vertical_size"], 
                     "font": lcd_comm.display_config["font"],
