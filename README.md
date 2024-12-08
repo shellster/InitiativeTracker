@@ -74,11 +74,11 @@ In your console, you'll see something like this:
 
 ```
 Currently Up:
-        Bob
+        Bob: 22
 
 On Deck:
-        Korak
-        Hobgoblin 1
+        Korak: 19
+        Hobgoblin 1: 19
 
 Next?
 ```
