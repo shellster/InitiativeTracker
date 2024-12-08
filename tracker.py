@@ -3,6 +3,7 @@ import json
 import logging
 import secrets
 import sys
+
 from unittest import mock
 
 # Ugly hack to prevent log file from getting dropped
@@ -10,6 +11,7 @@ sys.modules["library.log"] = mock.Mock()
 sys.modules["library.log.logger"] = logging.getLogger()
 
 from library.lcd.lcd_comm import Orientation
+
 
 MAX_NAMES_SHOW = 5
 LEFT_PAD = 5
@@ -138,12 +140,12 @@ if __name__ == "__main__":
                     current_initiative = initiative_order[key]
 
                 if current_initiative == initiative_order[key]:
-                    current_up.append(key)
+                    current_up.append((key, initiative_order[key]))
                 elif next_initative is None:
                     next_initative = initiative_order[key]
             
                 if next_initative == initiative_order[key]:
-                    next_up.append(key)
+                    next_up.append((key, initiative_order[key]))
 
                 background_color = config["default_background_color"]
                 foreground_color = config["default_foreground_color"]
@@ -169,8 +171,11 @@ if __name__ == "__main__":
                     "background_color": tuple(background_color)
                 })          
 
-
-            print(f"Currently Up:\n\t{"\n\t".join(current_up)}\n\nOn Deck:\n\t{"\n\t".join(next_up)}\n\n")
+            print("%s%s%s" % (
+                f"Currently Up:\n\t{"\n\t".join([f'{x[0]}: {x[1]}' for x in current_up])}\n\n",
+                "================================\n\n" if next_up[0][1] > current_up[0][1] else "",
+                f"On Deck:\n\t{"\n\t".join([f'{x[0]}: {x[1]}' for x in next_up])}\n\n"
+            ))
             draw_screen(staged_commands)
             input("Next?")
 
