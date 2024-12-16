@@ -8,7 +8,10 @@ from unittest import mock
 
 # Ugly hack to prevent log file from getting dropped
 sys.modules["library.log"] = mock.Mock()
-sys.modules["library.log.logger"] = logging.getLogger()
+
+logger = logging.getLogger()
+
+sys.modules["library.log.logger"] = logger
 
 from library.lcd.lcd_comm import Orientation
 
@@ -29,6 +32,27 @@ DEFAULT_FOREGROUND_COLOR = (0, 9, 148)
 DEFAULT_BACKGROUND_COLOR = (0, 0, 0)
 ON_DECK_FOREGROUND_COLOR = (0, 9, 148)
 ON_DECK_BACKGROUND_COLOR = (229, 194, 157)
+
+
+class PatchExit:
+    """
+    Ugly context patch for sys.exit so we can alert users that the screen was not detected
+    upstream library insanely calls sys.exit, then traps errors and calls os._exit which makes
+    it impossible to catch the exit normally.
+    """
+
+    def __init__(self):
+        self._old_exit = sys.exit
+
+    def __enter__(self):
+        def _exit(*args, **kwargs):
+            logger.error("Unable to find or connect to screen.  Please check connection.")
+            self._old_exit(1)
+
+        sys.exit = _exit
+
+    def __exit__(self):
+        sys.exit = self._old_exit
 
 
 def get_lcd_instance(model_name, port):
@@ -71,7 +95,8 @@ def get_lcd_instance(model_name, port):
             self.ScreenOff()
             self.ScreenOn()
 
-    return type('LCD', (BaseLCDClass, ClearScreenMixin), {"display_config": models[model_name]["display_config"]})(com_port=port)
+    with PatchExit():
+        return type('LCD', (BaseLCDClass, ClearScreenMixin), {"display_config": models[model_name]["display_config"]})(com_port=port)
 
 
 def draw_screen(commands):
