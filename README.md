@@ -56,9 +56,9 @@ either not specify it or set it to `"AUTO"` for autodetection of the appropriate
 * **enemy_background_color**: If provided, enemy background row color will always appear as this in the initiative list, otherwise it will be the same background colors as a player for currently up, on deck, other.
 
 * **player_order**: This is object where the keys are the player's names (or player-aligned characters in this initiative) and the values are either an integer representing their initiative order, or an array of two values 
-representing the inclusive range of their initative.  In the latter case, a random initiative value in the provided range will be rolled at runtime.  Order of players in object is not imporant (they are sorted at runtime).  
+representing the inclusive range of their initiative.  In the latter case, a random initiative value in the provided range will be rolled at runtime.  Order of players in object is not important (they are sorted at runtime).  
 Adding a `-` to the front of the player name will result in the player not appearing in the initiative list (a quick way to temporarily remove a player without deleting them).  Player names will be truncated as necessary to 
-fit on the screen.  For mine code will truncate at 11 characters.
+fit on the screen.  For my screen, it will truncate all names to 11 characters.
 
 * **enemy_order**: This follows all the same rules and configuration options as player_order, but it represents any "enemy" characters in relation to the players.
 
