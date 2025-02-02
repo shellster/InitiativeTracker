@@ -51,7 +51,7 @@ class PatchExit:
 
         sys.exit = _exit
 
-    def __exit__(self):
+    def __exit__(self, *args, **kwargs):
         sys.exit = self._old_exit
 
 
@@ -195,11 +195,14 @@ if __name__ == "__main__":
                     "font_color": tuple(foreground_color),
                     "background_color": tuple(background_color)
                 })          
+                
+            formatted_currently_up = "\n\t".join([f'{x[0]}: {x[1]}' for x in current_up])
+            formatted_next_up = "\n\t".join([f'{x[0]}: {x[1]}' for x in next_up])
 
             print("%s%s%s" % (
-                f"Currently Up:\n\t{"\n\t".join([f'{x[0]}: {x[1]}' for x in current_up])}\n\n",
+                f"Currently Up:\n\t{formatted_currently_up}\n\n",
                 "================================\n\n" if next_up[0][1] > current_up[0][1] else "",
-                f"On Deck:\n\t{"\n\t".join([f'{x[0]}: {x[1]}' for x in next_up])}\n\n"
+                f"On Deck:\n\t{formatted_next_up}\n\n"
             ))
             draw_screen(staged_commands)
             input("Next?")
