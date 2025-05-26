@@ -1,6 +1,7 @@
 import importlib
 import json
 import logging
+import os
 import secrets
 import sys
 
@@ -135,6 +136,7 @@ def load_config():
 
 
 if __name__ == "__main__":
+
     config = load_config()
 
     lcd_comm = get_lcd_instance(config["screen_model"], config["screen_port"])
@@ -147,7 +149,26 @@ if __name__ == "__main__":
     initiative_order.update(config["enemy_order"].copy())
     initiative_order = {k:(v if isinstance(v, int) else secrets.choice(range(v[0], v[1] + 1))) for k,v in initiative_order.items() if not k.startswith("-")}
 
+    CACHE_FILE = ".cache"
+
+    if len(sys.argv) == 2 and sys.argv[1] in ("-c", "--clear-cache"):
+        if os.path.exists(CACHE_FILE):
+            os.remove(CACHE_FILE)
+
+    if os.path.exists(CACHE_FILE):
+        with open(CACHE_FILE, "r") as f:
+            try:
+                cached_initiative_order = json.load(f)
+                for k, v in cached_initiative_order.items():
+                    if k in initiative_order:
+                        initiative_order[k] = v
+            except json.JSONDecodeError:
+                logger.warning("Cache file is corrupted, ignoring.")
+
     ordered = [k for k, _ in sorted(initiative_order.items(), key=lambda item: item[1] - (1 if item[0] in config["enemy_order"] else 0))]
+
+    with open(CACHE_FILE, "w") as f:
+        json.dump(initiative_order, f)
 
     try:
         while len(initiative_order):
