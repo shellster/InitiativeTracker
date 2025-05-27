@@ -162,6 +162,7 @@ cython_debug/
 #.idea/
 
 initiative.json
+.cache
 tmp
 screencap.png
 Pipfile

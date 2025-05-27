@@ -66,7 +66,20 @@ fit on the screen.  For my screen, it will truncate all names to 11 characters.
 
 Once you have configured your initiative.json file, you can run the program like so:
 
-python3 tracker.py `path/to/initiative.json`  (path is optional, will default to `initiative.json`)
+```
+usage: python tracker.py [-h] [-c] [config_file]
+
+TTRPG Initiative Tracker
+
+positional arguments:
+  config_file
+
+options:
+  -h, --help         show this help message and exit
+  -c, --clear-cache
+```
+
+(config_file is optional, will default to `initiative.json`)
 
 Assuming you've configured everything correctly, the initiative should appear after a few seconds on your little screen.
 
@@ -91,7 +104,14 @@ Pressing `Enter` will advance the initiative one entity.
 
 `Ctrl + C` will turn off the screen and exit.
 
-**Note on Initiative Order**: If a player or players and one or more enemies share initiative order, the code will always ensure that the player(s) appear first in the initiative list.
+
+**Notes on Initiative Order**: 
+
+If a player or players and one or more enemies share initiative order, the code will always ensure that the player(s) appear first in the initiative list.
+Also, unless the `-c` option is specified, the order will be cached.  Upon starting the tracker again, any initiative in the config that was specified as a range
+will instead use the cached value if one exists for that enemy or player.  This allows you stop initiative and added or remove players or enemies and restart
+without having enemy initiative orders jump around if you had specified an range to auto-roll for your enemies.  If you want to re-roll, or it is a new fight,
+make sure to pass the `-c` option to discard an recache the initiative order.
 
 
 ## Acknowledgements and Important Compatibility Notes
@@ -113,3 +133,10 @@ from turing-smart-screen-python.library.lcd.<revision> into this projects librar
 ## 3D Printed Case
 
 Checkout the cad folder for 3D printable holders for your screen that will clip to the back of a DM screen.
+
+
+## Versions
+
+* Version 0.1:  Initial Release
+
+* Version 1.0:  Refactor, clean-up, and support for caching initiatives
